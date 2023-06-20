@@ -1,7 +1,8 @@
-from django.urls import path
+from django.conf.urls import url
 from racas.views import cadastrar_raca, relatorio_racas
 
 urlpatterns = [
-    path('cadastrar_raca/', cadastrar_raca, name='cadastrar_raca'),
-    path('relatorio_racas/', relatorio_racas, name='relatorio_racas'),
+    url(r'^', cadastrar_raca, name='cadastrar_raca'),
+    url(r'^cadastrar_raca/$', cadastrar_raca, name='cadastrar_raca'),
+    url(r'^relatorio_racas/$', relatorio_racas, name='relatorio_racas'),
 ]
