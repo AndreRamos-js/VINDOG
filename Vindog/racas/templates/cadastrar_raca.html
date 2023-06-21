@@ -5,13 +5,36 @@
   <meta charset="UTF-8">
   <title>Cadastro de Raças</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
+  <style>
+    .conteudo {
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
+
+  <main class="conteudo">
+    <section class="conteudo_principal">
+      <div class="conteudo_principal_escrito">
+        <h1 class="conteudo_principal_escrito_titulo">Vindog</h1>
+        <br>
+        <h2 class="conteudo_principal_escrito_subtitulo">Uma aplicação para cadastrar raças de cachorros!</h2>
+        <button class="conteudo_principal_escrito_botao" onclick="location.href='#aqui'">Cadastre agora</button>
+      </div>
+    </section>
+    <br>
+    <section class="conteudo_secundario">
+      <h3 class="conteudo_secundario_titulo">Armazene as suas raças preferidas!</h3>
+      <br>
+      <p class="conteudo_secundario_paragrafo">Com a Vindog você pode <strong>criar e armazenar</strong> as suas raças de cachorros desejadas.</p>
+      <p class="conteudo_secundario_paragrafo">Nosso banco de dados irá <strong>proteger suas informações e dados</strong>.</p>
+      <p class="conteudo_secundario_paragrafo">Seu negocio terá hoje mesmo um ambiente <strong>seguro e pratico</strong> para armazenamento!</p>
+    </section>
+  </main>
+    <hr>
+  <div class="container" id="aqui">
     <h2>Cadastro de Raças</h2>
     <form method="post">
       {% csrf_token %}
@@ -39,28 +62,12 @@
 
     <hr>
     <h3>Raças Cadastradas</h3>
-    <select id="racas-select" class="form-control">
-      {% for raca in racas %}
-        <option value="{{ raca.id }}">{{ raca.nome }}</option>
-      {% endfor %}
-    </select>
-    <div id="relatorio-raca" class="mt-4">
-      <!-- Os detalhes da raça selecionada serão preenchidos dinamicamente aqui -->
+    <div class="form-group">
+      <select id="racas-select" class="form-control">
+        {% for raca in racas %}
+          <option value="{{ raca.id }}">{{ raca.nome }}</option>
+        {% endfor %}
+      </select>
     </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('#racas-select').change(function() {
-        var racaId = $(this).val();
-        $.ajax({
-          url: 'relatorio' + racaId + '/',
-          success: function(response) {
-            $('#relatorio-raca').html(response);
-          }
-        });
-      });
-    });
-  </script>
 </body>
 </html>
