@@ -8,7 +8,3 @@ def cadastrar_raca(request):
         form.save()
     racas = Raca.objects.all()
     return render(request, 'cadastrar_raca.html', {'form': form, 'racas': racas})
-
-def relatorio_racas(request, raca_id):
-    raca = get_object_or_404(Raca, pk=raca_id)
-    return render(request, 'relatorio_racas.html', {'raca': raca})
