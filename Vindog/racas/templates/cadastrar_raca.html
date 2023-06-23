@@ -38,29 +38,46 @@
     <h2>Cadastro de Raças</h2>
     <form method="post">
       {% csrf_token %}
-      
+
       <!-- Nome -->
       <div class="form-group">
         <label for="id_nome">Nome:</label>
         <input type="text" class="form-control" id="id_nome" name="nome">
       </div>
-      
-      <!-- Peso -->
+
+      <!-- Cores -->
       <div class="form-group">
-        <label for="id_peso">Peso:</label>
-        <input type="number" class="form-control" id="id_peso" name="peso">
+        <label for="id_nome">Cores:</label>
+        <input type="text" class="form-control" id="id_cores" name="cores">
       </div>
-      
+
+      <!-- País -->
+      <div class="form-group">
+        <label for="id_nome">País de origem:</label>
+        <input type="text" class="form-control" id="id_pais" name="pais">
+      </div>
+
+      <!-- Tamanho -->
+      <div class="form-group">
+        <label for="id_tamanho">Tamanho:</label>
+        <select class="form-control" id="id_tamanho" name="tamanho">
+          <option value="P">Pequeno</option>
+          <option value="M">Médio</option>
+          <option value="G">Grande</option>
+        </select>
+      </div>
+
       <!-- Descrição -->
       <div class="form-group">
         <label for="id_descricao">Descrição:</label>
         <textarea class="form-control" id="id_descricao" name="descricao"></textarea>
       </div>
-      
+
       <button type="submit" class="btn btn-primary">Cadastrar</button>
     </form>
 
     <hr>
+    
     <h3>Raças Cadastradas</h3>
     <div class="form-group">
       <select id="racas-select" class="form-control">
@@ -69,5 +86,4 @@
         {% endfor %}
       </select>
     </div>
-</body>
-</html>
+  </div>
