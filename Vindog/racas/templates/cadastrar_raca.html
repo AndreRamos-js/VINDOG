@@ -1,89 +1,83 @@
-{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Cadastro de Raças</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-  <style>
-    .conteudo {
-      padding: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <title>Cadastro de Raças</title>
 </head>
 <body>
-
-  <main class="conteudo">
-    <section class="conteudo_principal">
-      <div class="conteudo_principal_escrito">
-        <h1 class="conteudo_principal_escrito_titulo">Vindog</h1>
+    <main class="conteudo">
+        <section class="conteudo_principal">
+            <div class="conteudo_principal_escrito">
+                <h1 class="conteudo_principal_escrito_titulo">Vindog</h1>
+                <br>
+                <h2 class="conteudo_principal_escrito_subtitulo">Uma aplicação para cadastrar raças de cachorros!</h2>
+                    <button class="conteudo_principal_escrito_botao" onclick="location.href='#aqui'">Cadastre agora</button>
+            </div>
+        </section>
         <br>
-        <h2 class="conteudo_principal_escrito_subtitulo">Uma aplicação para cadastrar raças de cachorros!</h2>
-        <button class="conteudo_principal_escrito_botao" onclick="location.href='#aqui'">Cadastre agora</button>
-      </div>
-    </section>
-    <br>
-    <section class="conteudo_secundario">
-      <h3 class="conteudo_secundario_titulo">Armazene as suas raças preferidas!</h3>
-      <br>
-      <p class="conteudo_secundario_paragrafo">Com a Vindog você pode <strong>criar e armazenar</strong> as suas raças de cachorros desejadas.</p>
-      <p class="conteudo_secundario_paragrafo">Nosso banco de dados irá <strong>proteger suas informações e dados</strong>.</p>
-      <p class="conteudo_secundario_paragrafo">Seu negocio terá hoje mesmo um ambiente <strong>seguro e pratico</strong> para armazenamento!</p>
-    </section>
-  </main>
+        <section class="conteudo_secundario">
+            <h3 class="conteudo_secundario_titulo">Armazene as suas raças preferidas!</h3>
+            <br>
+                <p class="conteudo_secundario_paragrafo">Com a Vindog você pode <strong>criar e armazenar</strong> as suas raças de cachorros desejadas.</p>
+                <p class="conteudo_secundario_paragrafo">Nosso banco de dados irá <strong>proteger suas informações e dados</strong>.</p>
+                <p class="conteudo_secundario_paragrafo">Seu negocio terá hoje mesmo um ambiente <strong>seguro e pratico</strong> para armazenamento!</p>
+        </section>
+    </main>
     <hr>
-  <div class="container" id="aqui">
-    <h2>Cadastro de Raças</h2>
-    <form method="post">
-      {% csrf_token %}
+        <div class="container" id="aqui">
+            <h2>Cadastro de Raças</h2>
+                
+        <form method="post">
+        {% csrf_token %}
 
-      <!-- Nome -->
-      <div class="form-group">
-        <label for="id_nome">Nome:</label>
-        <input type="text" class="form-control" id="id_nome" name="nome">
-      </div>
+            <!-- Nome -->
+            <div class="form-group">
+                <label for="id_nome">Nome:</label>
+                <input type="text" class="form-control" id="id_nome" name="nome">
+            </div>
 
-      <!-- Cores -->
-      <div class="form-group">
-        <label for="id_nome">Cores:</label>
-        <input type="text" class="form-control" id="id_cores" name="cores">
-      </div>
+            <!-- Cores -->
+            <div class="form-group">
+                <label for="id_nome">Cores:</label>
+                <input type="text" class="form-control" id="id_cores" name="cores">
+            </div>
 
-      <!-- País -->
-      <div class="form-group">
-        <label for="id_nome">País de origem:</label>
-        <input type="text" class="form-control" id="id_pais" name="pais">
-      </div>
+            <!-- País -->
+            <div class="form-group">
+                <label for="id_nome">País de origem:</label>
+                <input type="text" class="form-control" id="id_pais" name="pais">
+            </div>
 
-      <!-- Tamanho -->
-      <div class="form-group">
-        <label for="id_tamanho">Tamanho:</label>
-        <select class="form-control" id="id_tamanho" name="tamanho">
-          <option value="P">Pequeno</option>
-          <option value="M">Médio</option>
-          <option value="G">Grande</option>
-        </select>
-      </div>
+            <!-- Tamanho -->
+            <div class="form-group">
+                <label for="id_tamanho">Tamanho:</label>
+                    <select class="form-control" id="id_tamanho" name="tamanho">
+                        <option value="P">Pequeno</option>
+                        <option value="M">Médio</option>
+                        <option value="G">Grande</option>
+                    </select>
+            </div>
 
-      <!-- Descrição -->
-      <div class="form-group">
-        <label for="id_descricao">Descrição:</label>
-        <textarea class="form-control" id="id_descricao" name="descricao"></textarea>
-      </div>
+            <!-- Descrição -->
+            <div class="form-group">
+                <label for="id_descricao">Descrição:</label>
+                    <textarea class="form-control" id="id_descricao" name="descricao"></textarea>
+            </div>
 
-      <button type="submit" class="btn btn-primary">Cadastrar</button>
-    </form>
-
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
     <hr>
-    
-    <h3>Raças Cadastradas</h3>
-    <div class="form-group">
-      <select id="racas-select" class="form-control">
-        {% for raca in racas %}
-          <option value="{{ raca.id }}">{{ raca.nome }}</option>
-        {% endfor %}
-      </select>
-    </div>
-  </div>
+        <h3>Raças Cadastradas</h3>
+            <div class="form-group">
+                <select id="racas-select" class="form-control">
+                {% for raca in racas %}
+                    <option value="{{ raca.id }}">{{ raca.nome }}</option>
+                {% endfor %}
+                </select>
+            </div>
+</body>
+</html>
