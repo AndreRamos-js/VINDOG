@@ -19,7 +19,7 @@ class RacaForm(forms.ModelForm):
 class CachorroForm(forms.ModelForm):
     class Meta:
         model = Cachorro
-        fields = ['nome', 'peso', 'altura', 'sexo', 'descricao', 'raca']
+        fields = ['nome', 'peso', 'altura', 'sexo', 'descricao', 'personalidade', 'raca']
 
     def __init__(self, *args, **kwargs):
         super(CachorroForm, self).__init__(*args, **kwargs)

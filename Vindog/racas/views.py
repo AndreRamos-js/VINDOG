@@ -1,23 +1,32 @@
-from django.shortcuts import render, get_object_or_404
-from django.views import View
-from django.urls import reverse
+from django.views.generic import CreateView, TemplateView
 from .forms import RacaForm
 from .models import Raca
-from django.http import HttpResponseRedirect
+from .forms import CachorroForm
+from .models import Cachorro
 
-class CadastrarRacaView(View):
+
+
+class TemplateIndexView(TemplateView):
+    template_name = 'index.html'
+
+class CadastrarRacaCreateView(CreateView):
     template_name = 'cadastrar_raca.html'
     form_class = RacaForm
+    model = Raca
+    success_url = '/'
 
-    def get(self, request):
-        form = self.form_class()
-        racas = Raca.objects.all()
-        return render(request, self.template_name, {'form': form, 'racas': racas})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['racas']=Raca.objects.all()
+        return context
+    
+class CadastrarCachorroCreateView(CreateView):
+    template_name = 'cadastrar_cachorro.html'
+    form_class = CachorroForm
+    model = Cachorro
+    success_url = '/'
 
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('cadastrar_raca'))  # Redireciona após o salvamento
-        racas = Raca.objects.all()
-        return render(request, self.template_name, {'form': form, 'racas': racas})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cachorros']=Cachorro.objects.all()
+        return context
