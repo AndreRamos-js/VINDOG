@@ -10,25 +10,26 @@
     <title>Cadastro de Cachorros - Vindog</title>
 </head>
 <body>
-    <main class="conteudo">
-        <section class="conteudo_principal">
-            <div class="conteudo_principal_escrito">
-                <h1 class="conteudo_principal_escrito_titulo">Vindog</h1>
+    <main>
+        <section>
+            <div>
+                <h1>Vindog</h1>
                 <br>
-                <button><a href="{% url 'cadastrar_raca' %}">CADASTRAR RAÇAS</a></button>
+                <button><a href="{% url 'cadastrar_raca' %}">CADASTRAR RAÇAS</a></button> |
+                <button><a href="{% url 'index' %}">INICIO</a></button>
             </div>
         </select>
         <br>
-        <section class="conteudo_secundario">
-            <h3 class="conteudo_secundario_titulo">Armazene as suas raças preferidas!</h3>
+        <section>
+            <h3>Armazene as suas raças preferidas!</h3>
             <br>
-                <p class="conteudo_secundario_paragrafo">Com a Vindog você pode <strong>criar e armazenar</strong> os seus cachorros.</p>
-                <p class="conteudo_secundario_paragrafo">Nosso banco de dados irá <strong>proteger suas informações e dados</strong>.</p>
-                <p class="conteudo_secundario_paragrafo">Seu negocio terá hoje mesmo um ambiente <strong>seguro e pratico</strong> para armazenamento!</p>
+                <p>Com a Vindog você pode <strong>criar e armazenar</strong> os seus cachorros.</p>
+                <p>Nosso banco de dados irá <strong>proteger suas informações e dados</strong>.</p>
+                <p>Seu negocio terá hoje mesmo um ambiente <strong>seguro e pratico</strong> para armazenamento!</p>
         </section>
     </main>
     <hr>
-        <div class="container" id="aqui">
+        <div id="aqui">
             <h2>Cadastro de Cachorros</h2>
                 
         <form method="post">
@@ -37,8 +38,8 @@
         </form>
     <hr>
         <h3>Cachorros Cadastrados</h3>
-            <div class="form-group">
-                <select id="cachorros-select" class="form-control">
+            <div>
+                <select id="cachorros-select">
                 {% for cachorro in cachorros %}
                     <option value="{{ cachorro.id }}">{{ cachorro.nome }}</option>
                 {% endfor %}

@@ -9,6 +9,9 @@ from .models import Cachorro
 class TemplateIndexView(TemplateView):
     template_name = 'index.html'
 
+class TemplateRelatorioView(TemplateView):
+    template_name = 'relatorio.html'
+
 class CadastrarRacaCreateView(CreateView):
     template_name = 'cadastrar_raca.html'
     form_class = RacaForm
