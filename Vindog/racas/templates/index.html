@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <title>Home - Vindog</title>
+</head>
+<body>
+    <main class="conteudo">
+        <section>
+            <div>
+                <h1>Vindog</h1>
+                <br>
+                <h2>Conheça o Vindog</h2>
+                <h4>Sua plataforma para criar e armazenar os dados dos seus dogs!</h4>
+            </div>
+        </section>
+        <br>
+        <hr>
+        <section>
+            <h3>Armazene as suas raças preferidas!</h3>
+            <br>
+            <p>Com a Vindog você pode <strong>criar e armazenar</strong> as suas raças de cachorros desejadas.</p>
+            <p>Nosso banco de dados irá <strong>proteger suas informações e dados</strong>.</p>
+            <p>Seu negocio terá hoje mesmo um ambiente <strong>seguro e pratico</strong> para armazenamento!</p>
+            <br>
+                 
+            <button><a href="{% url 'cadastrar_raca' %}">CADASTRAR RAÇA</a></button> ou <button><a href="{% url 'cadastrar_cachorro' %}">CADASTRAR CACHORRO</a></button>
+        </section>
+    </main>
+</body>
+</html>
