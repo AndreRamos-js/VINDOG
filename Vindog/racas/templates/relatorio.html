@@ -22,80 +22,74 @@
             </div>
             <br><br>
             <h2>Raças Cadastradas</h2>
-            <input type="text" id="search-racas" placeholder="Pesquisar raça por nome">
+            <form method="get">
+                <input type="text" name="search_racas" placeholder="Pesquisar raça por nome">
+                <button type="submit">Pesquisar</button>
+            </form>
             <table class="table">
                 <thead>
                     <tr>
                         <th>Nome</th>
+                        <th>Tamanho</th>
                         <th>Cores</th>
                         <th>País</th>
-                        <th>Tamanho</th>
                         <th>Descrição</th>
                     </tr>
                 </thead>
-                <tbody id="racas-table-body">
+                <tbody>
                     {% for raca in racas %}
                     <tr>
                         <td>{{ raca.nome }}</td>
+                        <td>{{ raca.tamanho }}</td>
                         <td>{{ raca.cores }}</td>
                         <td>{{ raca.pais }}</td>
-                        <td>{{ raca.get_tamanho_display }}</td>
                         <td>{{ raca.descricao }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">Nenhuma raça encontrada.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+
             <hr><br>
             <h2>Cachorros Cadastrados</h2>
-            <input type="text" id="search-cachorros" placeholder="Pesquisar cachorro por nome">
+            <form method="get">
+                <input type="text" name="search_cachorros" placeholder="Pesquisar cachorro por nome">
+                <button type="submit">Pesquisar</button>
+            </form>
             <table class="table">
                 <thead>
                     <tr>
                         <th>Nome</th>
+                        <th>Raça</th>
+                        <th>Sexo</th>
                         <th>Peso</th>
                         <th>Altura</th>
-                        <th>Sexo</th>
-                        <th>Descrição</th>
                         <th>Personalidade</th>
-                        <th>Raça</th>
+                        <th>Descrição</th>
                     </tr>
                 </thead>
-                <tbody id="cachorros-table-body">
+                <tbody>
                     {% for cachorro in cachorros %}
                     <tr>
                         <td>{{ cachorro.nome }}</td>
+                        <td>{{ cachorro.raca.nome }}</td>
+                        <td>{{ cachorro.sexo }}</td>
                         <td>{{ cachorro.peso }}</td>
                         <td>{{ cachorro.altura }}</td>
-                        <td>{{ cachorro.get_sexo_display }}</td>
+                        <td>{{ cachorro.personalidade }}</td>
                         <td>{{ cachorro.descricao }}</td>
-                        <td>{{ cachorro.get_personalidade_display }}</td>
-                        <td>{{ cachorro.raca.nome }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">Nenhum cachorro encontrado.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </section>
     </main>
-    <hr>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Filtrar raças por nome
-            $("#search-racas").on("input", function() {
-                var inputVal = $(this).val().toLowerCase();
-                $("#racas-table-body tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(inputVal) > -1)
-                });
-            });
-
-            // Filtrar cachorros por nome
-            $("#search-cachorros").on("input", function() {
-                var inputVal = $(this).val().toLowerCase();
-                $("#cachorros-table-body tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(inputVal) > -1)
-                });
-            });
-        });
-    </script>
 </body>
 </html>
