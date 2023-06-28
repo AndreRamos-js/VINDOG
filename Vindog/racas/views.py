@@ -1,7 +1,8 @@
-from django.views.generic import CreateView, ListView, TemplateView
-from django.urls import reverse_lazy
+from django.views.generic import CreateView, TemplateView
 from .forms import RacaForm, CachorroForm
 from .models import Raca, Cachorro
+from .tasks import adicionar_raca, adicionar_cachorro
+from django.http import HttpResponseRedirect
 
 
 
@@ -33,9 +34,17 @@ class CadastrarRacaCreateView(CreateView):
     model = Raca
     success_url = '/'
 
+    def form_valid(self, form):
+        nome = form.cleaned_data['nome']
+        cores = form.cleaned_data['cores']
+        pais = form.cleaned_data['pais']
+        tamanho = form.cleaned_data['tamanho']
+        descricao = form.cleaned_data['descricao']
+        adicionar_raca.delay(nome, cores, pais, tamanho, descricao)
+        return HttpResponseRedirect('/')
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['racas']=Raca.objects.all()
         return context
     
 class CadastrarCachorroCreateView(CreateView):
@@ -44,7 +53,17 @@ class CadastrarCachorroCreateView(CreateView):
     model = Cachorro
     success_url = '/'
 
+    def form_valid(self, form):
+        nome = form.cleaned_data['nome']
+        peso = form.cleaned_data['peso']
+        altura = form.cleaned_data['altura']
+        sexo = form.cleaned_data['sexo']
+        descricao = form.cleaned_data['descricao']
+        personalidade = form.cleaned_data['personalidade']
+        raca_id = form.cleaned_data['raca'].id
+        adicionar_cachorro.delay(nome, peso, altura, sexo, descricao, personalidade, raca_id)
+        return HttpResponseRedirect('/')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cachorros']=Cachorro.objects.all()
         return context
