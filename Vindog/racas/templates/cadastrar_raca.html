@@ -29,6 +29,9 @@
         <form method="post">
         {% csrf_token %}
             {%crispy form%}
+            {% if success_message %}
+                <div class="alert alert-success">{{ success_message }}</div>
+            {% endif %}
         </form>
     <hr>
         <h3>Raças Cadastradas</h3>

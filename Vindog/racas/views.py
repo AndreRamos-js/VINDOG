@@ -45,6 +45,7 @@ class CadastrarRacaCreateView(CreateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['racas'] = Raca.objects.all()
         return context
     
 class CadastrarCachorroCreateView(CreateView):
@@ -66,4 +67,5 @@ class CadastrarCachorroCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['cachorros'] = Cachorro.objects.all()
         return context

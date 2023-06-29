@@ -37,19 +37,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for raca in racas %}
-                    <tr>
-                        <td>{{ raca.nome }}</td>
-                        <td>{{ raca.tamanho }}</td>
-                        <td>{{ raca.cores }}</td>
-                        <td>{{ raca.pais }}</td>
-                        <td>{{ raca.descricao }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="4">Nenhuma raça encontrada.</td>
-                    </tr>
-                    {% endfor %}
+                    {% if racas %}
+                        {% for raca in racas %}
+                        <tr>
+                            <td>{{ raca.nome }}</td>
+                            <td>{{ raca.tamanho }}</td>
+                            <td>{{ raca.cores }}</td>
+                            <td>{{ raca.pais }}</td>
+                            <td>{{ raca.descricao }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">Nenhuma raça encontrada.</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5">Nenhuma raça cadastrada.</td>
+                        </tr>
+                    {% endif %}
                 </tbody>
             </table>
 
@@ -72,21 +78,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for cachorro in cachorros %}
-                    <tr>
-                        <td>{{ cachorro.nome }}</td>
-                        <td>{{ cachorro.raca.nome }}</td>
-                        <td>{{ cachorro.sexo }}</td>
-                        <td>{{ cachorro.peso }}</td>
-                        <td>{{ cachorro.altura }}</td>
-                        <td>{{ cachorro.personalidade }}</td>
-                        <td>{{ cachorro.descricao }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="6">Nenhum cachorro encontrado.</td>
-                    </tr>
-                    {% endfor %}
+                    {% if cachorros %}
+                        {% for cachorro in cachorros %}
+                        <tr>
+                            <td>{{ cachorro.nome }}</td>
+                            <td>{{ cachorro.raca.nome }}</td>
+                            <td>{{ cachorro.sexo }}</td>
+                            <td>{{ cachorro.peso }}</td>
+                            <td>{{ cachorro.altura }}</td>
+                            <td>{{ cachorro.personalidade }}</td>
+                            <td>{{ cachorro.descricao }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7">Nenhum cachorro encontrado.</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7">Nenhum cachorro cadastrado.</td>
+                        </tr>
+                    {% endif %}
                 </tbody>
             </table>
         </section>
