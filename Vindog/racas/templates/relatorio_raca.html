@@ -4,62 +4,160 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Relatório Raças - Vindog</title>
 </head>
 <body>
-    <main>
-        <section>
-            <div>
-                <h1>Vindog</h1>
-                <br>
-                <h4>Aqui você encontra o relatório das raças cadastradas.</h4>
-                <br>
-                    <button><a href="{% url 'index' %}">INICIO</a></button> |
-                    <button><a href="{% url 'cadastrar_raca' %}">CADASTRAR RAÇAS</a></button> |
-                    <button><a href="{% url 'cadastrar_cachorro' %}">CADASTRAR CACHORRO</a></button>
-                    <button><a href="{% url 'relatorio_cachorro' %}">RELATÓRIO DE CACHORROS</a></button>
-            </div>
-            <br><br>
-            <h2>Raças Cadastradas</h2>
-            <form method="get">
-                <input type="text" name="search_racas" placeholder="Pesquisar raça por nome">
-                <button type="submit">Pesquisar</button>
+    <section class="container">
+        <br>
+        <h3>Encontre aqui suas raças cadastradas!</h3>
+        <br>
+        <button><a href="{% url 'index' %}">INICIO</a></button> |
+        <button><a href="{% url 'cadastrar_raca' %}">CADASTRAR RAÇA</a></button> |
+        <button><a href="{% url 'cadastrar_cachorro' %}">CADASTRAR CACHORRO</a></button> |
+        <button><a href="{% url 'relatorio_cachorro' %}">RELATÓRIO DE CACHORROS</a></button>
+        <br><br><hr>
+    </section>
+
+    <div class="container">
+        <h1>Relatório de Raças</h1>
+        <table class="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Cores</th>
+            <th>País</th>
+            <th>Tamanho</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for raca in racas %}
+          <tr>
+            <td>{{ raca.nome }}</td>
+            <td>{{ raca.cores }}</td>
+            <td>{{ raca.pais }}</td>
+            <td>{{ raca.tamanho }}</td>
+            <td>{{ raca.descricao }}</td>
+            <td>
+              <button class="btn btn-primary editar-raca"
+                data-raca-id="{{ raca.id }}"
+                data-raca-nome="{{ raca.nome }}"
+                data-raca-cores="{{ raca.cores }}"
+                data-raca-pais="{{ raca.pais }}"
+                data-raca-tamanho="{{ raca.tamanho }}"
+                data-raca-descricao="{{ raca.descricao }}"
+              >
+                Editar
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Modal de Edição de Raça -->
+    <div class="modal fade" id="editRacaModal" tabindex="-1" role="dialog" aria-labelledby="editRacaModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editRacaModalLabel">Editar Raça</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="edit-raca-form">
+              {% csrf_token %}
+              <input type="hidden" id="edit-raca-id" name="raca_id" value="">
+              <div class="form-group">
+                <label for="edit-raca-nome">Nome</label>
+                <input type="text" class="form-control" id="edit-raca-nome" name="nome" required>
+              </div>
+              <div class="form-group">
+                <label for="edit-raca-cores">Cores</label>
+                <input type="text" class="form-control" id="edit-raca-cores" name="cores" required>
+              </div>
+              <div class="form-group">
+                <label for="edit-raca-pais">País</label>
+                <input type="text" class="form-control" id="edit-raca-pais" name="pais" required>
+              </div>
+              <div class="form-group">
+                <label for="edit-raca-tamanho">Tamanho</label>
+                <select class="form-control" id="tamanho" name="tamanho">
+                    <option value="P">Pequeno</option>
+                    <option value="M">Médio</option>
+                    <option value="G">Grande</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                <label for="edit-cachorro-descricao">Descrição</label>
+                <input type="text" class="form-control" id="edit-cachorro-descricao" name="descricao" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Tamanho</th>
-                        <th>Cores</th>
-                        <th>País</th>
-                        <th>Descrição</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if racas %}
-                        {% for raca in racas %}
-                        <tr>
-                            <td>{{ raca.nome }}</td>
-                            <td>{{ raca.tamanho }}</td>
-                            <td>{{ raca.cores }}</td>
-                            <td>{{ raca.pais }}</td>
-                            <td>{{ raca.descricao }}</td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5">Nenhuma raça encontrada.</td>
-                        </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="5">Nenhuma raça cadastrada.</td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </section>
-    </main>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+    <script>
+    $(document).ready(function() {
+        // Função para abrir o modal de edição de raça
+        $('.editar-raca').click(function() {
+          var racaId = $(this).data('raca-id');
+          var racaNome = $(this).data('raca-nome');
+          var racaCores = $(this).data('raca-cores');
+          var racaPais = $(this).data('raca-pais');
+          var racaTamanho = $(this).data('raca-tamanho');
+          var racaDescricao = $(this).data('raca-descricao');
+  
+          // Preenche os campos do formulário de edição com os dados da raça selecionada
+          $('#edit-raca-id').val(racaId);
+          $('#edit-raca-nome').val(racaNome);
+          $('#edit-raca-cores').val(racaCores);
+          $('#edit-raca-pais').val(racaPais);
+          $('#edit-raca-tamanho').val(racaTamanho);
+          $('#edit-raca-descricao').val(racaDescricao);
+  
+          // Abre o modal de edição de raça
+          $('#editRacaModal').modal('show');
+        });
+    });
+    // Função para enviar o formulário de edição de raça por AJAX
+    $('#edit-raca-form').submit(function(e) {
+          e.preventDefault();
+  
+          var form = $(this);
+          var url = form.attr('action');
+          var formData = form.serialize();
+  
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'editar_raca' %}",
+            data: formData,
+            success: function(response) {
+              if (response.success) {
+                // Atualiza a tabela de raças com os dados atualizados
+                location.reload();
+              } else {
+                // Exibe os erros de validação no formulário de edição de raça
+                var errors = response.errors;
+                for (var field in errors) {
+                  var input = $('#edit-raca-' + field);
+                  var error = errors[field][0];
+                  input.addClass('is-invalid');
+                  input.next('.invalid-feedback').text(error);
+                }
+              }
+            }
+        });
+    });
+    </script>
 </body>
 </html>

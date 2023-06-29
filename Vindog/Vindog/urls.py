@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from racas.views import CadastrarRacaCreateView, CadastrarCachorroCreateView,\
-TemplateIndexView, TemplateRelatorioRacaView, TemplateRelatorioCachorroView
+TemplateIndexView, TemplateRelatorioRacaView, TemplateRelatorioCachorroView,\
+EditarRacaView, EditarCachorroView
 
 
 
@@ -10,4 +11,6 @@ urlpatterns = [
     url(r'^cadastrar_cachorro/$', CadastrarCachorroCreateView.as_view(), name='cadastrar_cachorro'),
     url(r'^relatorio_raca/$', TemplateRelatorioRacaView.as_view(), name='relatorio_raca'),
     url(r'^relatorio_cachorro/$', TemplateRelatorioCachorroView.as_view(), name='relatorio_cachorro'),
+    url(r'^editar_raca/$', EditarRacaView.as_view(), name='editar_raca'),
+    url(r'^editar_cachorro/$', EditarCachorroView.as_view(), name='editar_cachorro'),
 ]

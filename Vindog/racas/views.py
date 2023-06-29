@@ -1,9 +1,9 @@
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, View
 from .forms import RacaForm, CachorroForm
 from .models import Raca, Cachorro
 from .tasks import adicionar_raca, adicionar_cachorro
-from django.http import HttpResponseRedirect
-
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import render, get_object_or_404
 
 
 class TemplateIndexView(TemplateView):
@@ -29,6 +29,7 @@ class TemplateRelatorioCachorroView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['cachorros'] = Cachorro.objects.all()
+        context['racas'] = Raca.objects.all()
 
         search_cachorros = self.request.GET.get('search_cachorros')
 
@@ -78,3 +79,45 @@ class CadastrarCachorroCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['cachorros'] = Cachorro.objects.all()
         return context
+
+class EditarRacaView(View):
+    def post(self, request):
+        raca_id = request.POST['raca_id']
+        nome = request.POST['nome']
+        cores = request.POST['cores']
+        pais = request.POST['pais']
+        tamanho = request.POST['tamanho']
+        descricao = request.POST['descricao']
+        
+        raca = get_object_or_404(Raca, id=raca_id)
+        raca.nome = nome
+        raca.cores = cores
+        raca.pais = pais
+        raca.tamanho = tamanho
+        raca.descricao = descricao
+        raca.save()
+        
+        return JsonResponse({'success': True})
+    
+class EditarCachorroView(View):
+    def post(self, request):
+        cachorro_id = request.POST['cachorro_id']
+        nome = request.POST['nome']
+        peso = request.POST['peso']
+        altura = request.POST['altura']
+        sexo = request.POST['sexo']
+        descricao = request.POST['descricao']
+        personalidade = request.POST['personalidade']
+        raca_id = request.POST['raca_id']
+        
+        cachorro = get_object_or_404(Cachorro, id=cachorro_id)
+        cachorro.nome = nome
+        cachorro.peso = peso
+        cachorro.altura = altura
+        cachorro.sexo = sexo
+        cachorro.descricao = descricao
+        cachorro.personalidade = personalidade
+        cachorro.raca = get_object_or_404(Raca, id=raca_id)
+        cachorro.save()
+        
+        return JsonResponse({'success': True})

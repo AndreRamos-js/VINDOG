@@ -4,66 +4,191 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Relatório Cachorros - Vindog</title>
 </head>
 <body>
-    <main>
-        <section>
-            <div>
-                <h1>Vindog</h1>
-                <br>
-                <h4>Aqui você encontra o relatório dos cachorros cadastrados.</h4>
-                <br>
-                    <button><a href="{% url 'index' %}">INICIO</a></button> |
-                    <button><a href="{% url 'cadastrar_raca' %}">CADASTRAR RAÇAS</a></button> |
-                    <button><a href="{% url 'cadastrar_cachorro' %}">CADASTRAR CACHORRO</a></button> |
-                    <button><a href="{% url 'relatorio_raca' %}">RELATÓRIO DE RAÇAS</a></button>
-            </div>
-            <hr><br>
-            <h2>Cachorros Cadastrados</h2>
-            <form method="get">
-                <input type="text" name="search_cachorros" placeholder="Pesquisar cachorro por nome">
-                <button type="submit">Pesquisar</button>
+    <section class="container">
+        <br>
+        <h3>Encontre aqui seus cachorros cadastrados!</h3>
+        <br>
+        <button><a href="{% url 'index' %}">INICIO</a></button> |
+        <button><a href="{% url 'cadastrar_raca' %}">CADASTRAR RAÇA</a></button> |
+        <button><a href="{% url 'cadastrar_cachorro' %}">CADASTRAR CACHORRO</a></button> |
+        <button><a href="{% url 'relatorio_raca' %}">RELATÓRIO DE RAÇAS</a></button>
+        <br><br><hr>
+    </section>
+
+    <div class="container">
+      <h1>Relatório de Cachorros</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Raça</th>
+            <th>Peso</th>
+            <th>Altura</th>
+            <th>Sexo</th>
+            <th>Personalidade</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cachorro in cachorros %}
+          <tr>
+            <td>{{ cachorro.nome }}</td>
+            <td>{{ cachorro.raca.nome }}</td>
+            <td>{{ cachorro.peso }}</td>
+            <td>{{ cachorro.altura }}</td>
+            <td>{{ cachorro.sexo }}</td>
+            <td>{{ cachorro.personalidade }}</td>
+            <td>{{ cachorro.descricao }}</td>
+            <td>
+              <button class="btn btn-primary editar-cachorro"
+                data-cachorro-id="{{ cachorro.id }}"
+                data-cachorro-nome="{{ cachorro.nome }}"
+                data-cachorro-raca="{{ cachorro.raca.id }}"
+                data-cachorro-peso="{{ cachorro.peso }}"
+                data-cachorro-altura="{{ cachorro.altura }}"
+                data-cachorro-sexo="{{ cachorro.sexo }}"
+                data-cachorro-personalidade="{{ cachorro.personalidade }}"
+                data-cachorro-descricao="{{ cachorro.descricao }}"
+              >
+                Editar
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Modal de Edição de Cachorro -->
+    <div class="modal fade" id="editCachorroModal" tabindex="-1" role="dialog" aria-labelledby="editCachorroModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editCachorroModalLabel">Editar Cachorro</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="edit-cachorro-form">
+              {% csrf_token %}
+              <input type="hidden" id="edit-cachorro-id" name="cachorro_id" value="">
+              <div class="form-group">
+                <label for="edit-cachorro-nome">Nome</label>
+                <input type="text" class="form-control" id="edit-cachorro-nome" name="nome" required>
+              </div>
+              <div class="form-group">
+                <label for="edit-cachorro-raca">Raça</label>
+                <select class="form-control" id="edit-cachorro-raca" name="raca_id" required>
+                    {% for raca in racas %}
+                    <option value="{{ raca.id }}">{{ raca.nome }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="edit-cachorro-peso">Peso</label>
+                <input type="number" step="0.01" class="form-control" id="edit-cachorro-peso" name="peso" required>
+              </div>
+              <div class="form-group">
+                <label for="edit-cachorro-altura">Altura</label>
+                <input type="number" step="0.01" class="form-control" id="edit-cachorro-altura" name="altura" required>
+              </div>
+              <div class="form-group">
+                <label for="edit-cachorro-sexo">Sexo</label>
+                <select class="form-control" id="edit-cachorro-sexo" name="sexo">
+                    <option value="M">Macho</option>
+                    <option value="F">Fêmea</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                <label for="edit-cachorro-personalidade">Personalidade</label>
+                <select class="form-control" id="edit-cachorro-personalidade" name="personalidade">
+                    <option value="amigavel">Amigável</option>
+                    <option value="inteligente">Inteligente</option>
+                    <option value="afavel">Afável</option>
+                    <option value="agressivo">Agressivo</option>
+                    <option value="fiel">Fiel</option>
+                    <option value="teimoso">Teimoso</option>
+                    <option value="desajeitado">Desajeitado</option>
+                    <option value="reservado">Reservado</option>
+                    <option value="treinavel">Treinável</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                <label for="edit-cachorro-descricao">Descrição</label>
+                <input type="text" class="form-control" id="edit-cachorro-descricao" name="descricao" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Raça</th>
-                        <th>Sexo</th>
-                        <th>Peso</th>
-                        <th>Altura</th>
-                        <th>Personalidade</th>
-                        <th>Descrição</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if cachorros %}
-                        {% for cachorro in cachorros %}
-                        <tr>
-                            <td>{{ cachorro.nome }}</td>
-                            <td>{{ cachorro.raca.nome }}</td>
-                            <td>{{ cachorro.sexo }}</td>
-                            <td>{{ cachorro.peso }}</td>
-                            <td>{{ cachorro.altura }}</td>
-                            <td>{{ cachorro.personalidade }}</td>
-                            <td>{{ cachorro.descricao }}</td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="7">Nenhum cachorro encontrado.</td>
-                        </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="7">Nenhum cachorro cadastrado.</td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </select>
-    </main>
-</body>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+    <script>
+    $(document).ready(function() {
+        // Função para abrir o modal de edição de cachorro
+        $('.editar-cachorro').click(function() {
+          var cachorroId = $(this).data('cachorro-id');
+          var cachorroNome = $(this).data('cachorro-nome');
+          var cachorroRaca = $(this).data('cachorro-raca');
+          var cachorroPeso = $(this).data('cachorro-peso');
+          var cachorroAltura = $(this).data('cachorro-altura');
+          var cachorroSexo = $(this).data('cachorro-sexo');
+          var cachorroPersonalidade = $(this).data('cachorro-personalidade');
+          var cachorroDescricao = $(this).data('cachorro-descricao');
+  
+          // Preenche os campos do formulário de edição com os dados do cachorro selecionado
+          $('#edit-cachorro-id').val(cachorroId);
+          $('#edit-cachorro-nome').val(cachorroNome);
+          $('#edit-cachorro-raca').val(cachorroRaca);
+          $('#edit-cachorro-peso').val(cachorroPeso);
+          $('#edit-cachorro-altura').val(cachorroAltura);
+          $('#edit-cachorro-sexo').val(cachorroSexo);
+          $('#edit-cachorro-personalidade').val(cachorroPersonalidade);
+          $('#edit-cachorro-descricao').val(cachorroDescricao);
+  
+          // Abre o modal de edição de cachorro
+          $('#editCachorroModal').modal('show');
+        });
+    });
+    // Função para enviar o formulário de edição de cachorro por AJAX
+    $('#edit-cachorro-form').submit(function(e) {
+        e.preventDefault();
+  
+        var form = $(this);
+        var url = form.attr('action');
+        var formData = form.serialize();
+  
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'editar_cachorro' %}",
+            data: formData,
+            success: function(response) {
+              if (response.success) {
+                // Atualiza a tabela de cachorros com os dados atualizados
+                location.reload();
+              } else {
+                // Exibe os erros de validação no formulário de edição de cachorro
+                var errors = response.errors;
+                for (var field in errors) {
+                  var input = $('#edit-cachorro-' + field);
+                  var error = errors[field][0];
+                  input.addClass('is-invalid');
+                  input.next('.invalid-feedback').text(error);
+                }
+              }
+            }
+        });
+    });
+    </script>
+  </body>
 </html>
