@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <title>Relatório Raças - Vindog</title>
+</head>
+<body>
+    <main>
+        <section>
+            <div>
+                <h1>Vindog</h1>
+                <br>
+                <h4>Aqui você encontra o relatório das raças cadastradas.</h4>
+                <br>
+                    <button><a href="{% url 'index' %}">INICIO</a></button> |
+                    <button><a href="{% url 'cadastrar_raca' %}">CADASTRAR RAÇAS</a></button> |
+                    <button><a href="{% url 'cadastrar_cachorro' %}">CADASTRAR CACHORRO</a></button>
+                    <button><a href="{% url 'relatorio_cachorro' %}">RELATÓRIO DE CACHORROS</a></button>
+            </div>
+            <br><br>
+            <h2>Raças Cadastradas</h2>
+            <form method="get">
+                <input type="text" name="search_racas" placeholder="Pesquisar raça por nome">
+                <button type="submit">Pesquisar</button>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tamanho</th>
+                        <th>Cores</th>
+                        <th>País</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if racas %}
+                        {% for raca in racas %}
+                        <tr>
+                            <td>{{ raca.nome }}</td>
+                            <td>{{ raca.tamanho }}</td>
+                            <td>{{ raca.cores }}</td>
+                            <td>{{ raca.pais }}</td>
+                            <td>{{ raca.descricao }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">Nenhuma raça encontrada.</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5">Nenhuma raça cadastrada.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>
