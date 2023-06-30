@@ -51,6 +51,11 @@
                 Editar
               </button>
             </td>
+            <td>
+              <button class="btn btn-danger excluir-raca"
+                      data-raca-id="{{ raca.id }}">
+                  Excluir
+              </button>
           </tr>
           {% endfor %}
         </tbody>
@@ -158,6 +163,27 @@
             }
         });
     });
+    // Função para excluir uma raça
+    $('.excluir-raca').click(function() {
+              var racaId = $(this).data('raca-id');
+      
+              $.ajax({
+                  type: 'POST',
+                  url: "{% url 'excluir_raca' %}",
+                  data: {
+                      'raca_id': racaId,
+                      'csrfmiddlewaretoken': '{{ csrf_token }}'
+                  },
+                  success: function(response) {
+                      if (response.success) {
+                          // Recarrega a página para atualizar a tabela de raças
+                          location.reload();
+                      } else {
+                          alert('Erro ao excluir a raça.');
+                      }
+                  }
+              });
+      });
     </script>
 </body>
 </html>

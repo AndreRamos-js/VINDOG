@@ -57,6 +57,12 @@
                 Editar
               </button>
             </td>
+            <td>
+              <button class="btn btn-danger excluir-cachorro"
+                      data-cachorro-id="{{ cachorro.id }}">
+                  Excluir
+              </button>
+          </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -189,6 +195,27 @@
             }
         });
     });
+    // Função para excluir um cachorro
+    $('.excluir-cachorro').click(function() {
+              var cachorroId = $(this).data('cachorro-id');
+      
+              $.ajax({
+                  type: 'POST',
+                  url: "{% url 'excluir_cachorro' %}",
+                  data: {
+                      'cachorro_id': cachorroId,
+                      'csrfmiddlewaretoken': '{{ csrf_token }}'
+                  },
+                  success: function(response) {
+                      if (response.success) {
+                          // Recarrega a página para atualizar a tabela de cachorros
+                          location.reload();
+                      } else {
+                          alert('Erro ao excluir o cachorro.');
+                      }
+                  }
+              });
+      });
     </script>
   </body>
 </html>

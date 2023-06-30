@@ -1,7 +1,7 @@
 from django.views.generic import CreateView, TemplateView, View
 from .forms import RacaForm, CachorroForm
 from .models import Raca, Cachorro
-from .tasks import adicionar_raca, adicionar_cachorro
+from .tasks import adicionar_raca, adicionar_cachorro, excluir_raca, excluir_cachorro
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 
@@ -120,4 +120,16 @@ class EditarCachorroView(View):
         cachorro.raca = get_object_or_404(Raca, id=raca_id)
         cachorro.save()
         
+        return JsonResponse({'success': True})
+
+class ExcluirRacaView(View):
+    def post(self, request):
+        raca_id = request.POST['raca_id']
+        excluir_raca.delay(raca_id)
+        return JsonResponse({'success': True})
+
+class ExcluirCachorroView(View):
+    def post(self, request):
+        cachorro_id = request.POST['cachorro_id']
+        excluir_cachorro.delay(cachorro_id)
         return JsonResponse({'success': True})
