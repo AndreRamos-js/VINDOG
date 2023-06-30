@@ -19,6 +19,18 @@
         <br><br><hr>
     </section>
 
+    <section class="container">
+      <br>
+      <h3>Pesquisar Raças</h3>
+      <form method="GET" action="{% url 'relatorio_raca' %}">
+          <div class="form-group">
+              <input type="text" class="form-control" id="search-racas" name="search_racas" placeholder="Pesquisar raças cadastradas">
+          </div>
+          <button type="submit" class="btn btn-primary">Pesquisar</button>
+      </form>
+      <br>
+  </section>
+
     <div class="container">
         <h1>Relatório de Raças</h1>
         <table class="table">

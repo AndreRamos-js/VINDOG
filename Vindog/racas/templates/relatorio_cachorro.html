@@ -19,6 +19,18 @@
         <br><br><hr>
     </section>
 
+    <section class="container">
+      <br>
+      <h3>Pesquisar Cachorros</h3>
+      <form method="GET" action="{% url 'relatorio_cachorro' %}">
+          <div class="form-group">
+              <input type="text" class="form-control" id="search-cachorros" name="search_cachorros" placeholder="Pesquisar cachorros cadastrados">
+          </div>
+          <button type="submit" class="btn btn-primary">Pesquisar</button>
+      </form>
+      <br>
+  </section>
+
     <div class="container">
       <h1>Relatório de Cachorros</h1>
       <table class="table">
